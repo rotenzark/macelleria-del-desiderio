@@ -1,0 +1,209 @@
+/* La Macelleria del Desiderio · via Luigi Ornato 45 — «Desidera?»
+   La domanda del banco è anche il loro cognome. Il sito è una serie di domande al banco con le loro risposte (carne,
+   gastronomia, formaggi, a domicilio, da Antonio…). La firma è il fumetto: il macellaio disegnato sul loro grembiule
+   chiede «Desidera?» e risponde col titolo, sezione per sezione (stato finale nel CSS: fumetti aperti; il JS li chiude e
+   li fa sbocciare dalla coda). Palette: la tenda a righe beige e marrone, il blu dell'insegna, il rosso della carne. */
+
+/* ── reset tecnico (PLUMBING) ── */
+[hidden]{display:none !important}
+img{max-width:100%;height:auto}
+*,*::before,*::after{box-sizing:border-box}
+
+:root{
+  --crema:#FBF7EE; --carta:#FFFDF8; --beige:#E3D3B4; --beige-2:#F1E7D2; --marrone:#7A4B2E; --marrone-scuro:#5C3821;
+  --blu:#1F3A8F; --rosso:#B22234; --inchiostro:#1A1714; --grigio:#6B645B; --linea:#E4D9C3;
+  --f-tit:'Roboto Slab',Georgia,'Times New Roman',serif;
+  --f-txt:'Cabin',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --lato:clamp(1rem,5vw,4rem);
+  --testata:68px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--testata) + 12px)}
+body{margin:0;font-family:var(--f-txt);font-size:1.06rem;line-height:1.62;color:var(--inchiostro);background:var(--crema);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-tit);font-weight:700;line-height:1.12;margin:0;letter-spacing:-.005em}
+h2{font-size:clamp(1.6rem,3.2vw,2.5rem)}
+h3{font-size:clamp(1.1rem,1.7vw,1.35rem)}
+p{margin:0 0 1em}
+b,strong{font-weight:700}
+:focus-visible{outline:3px solid var(--blu);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* reveal: stato iniziale solo dietro .js (anti-flash) */
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in-view{opacity:1;transform:none}
+html:not(.js) .reveal{opacity:1;transform:none}
+
+/* ── la tenda a righe (dall'insegna) ── */
+.tenda{height:26px;background:repeating-linear-gradient(90deg,var(--beige) 0 26px,var(--beige-2) 26px 40px,var(--marrone) 40px 48px,var(--beige-2) 48px 62px);position:relative}
+.tenda::after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:10px;background:radial-gradient(circle at 10px -2px,transparent 9px,var(--beige) 10px) 0 0/20px 10px repeat-x}
+
+/* ── la firma: il fumetto ── */
+.banco{display:grid;grid-template-columns:auto 1fr;gap:.9rem 1rem;align-items:end}
+.banco__m{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--carta);box-shadow:0 6px 16px rgba(26,23,20,.16);background:var(--beige-2)}
+.banco__f{display:grid;gap:.5rem;justify-items:start}
+.fumetto{position:relative;display:inline-block;background:var(--carta);border:3px solid var(--inchiostro);border-radius:18px;padding:.45em .9em;transform-origin:0 100%;will-change:transform;max-width:100%}
+.fumetto::after{content:'';position:absolute;left:14px;bottom:-14px;width:0;height:0;border-left:12px solid transparent;border-right:8px solid transparent;border-top:14px solid var(--inchiostro)}
+.fumetto::before{content:'';position:absolute;left:18px;bottom:-9px;width:0;height:0;border-left:9px solid transparent;border-right:5px solid transparent;border-top:10px solid var(--carta);z-index:1}
+.fumetto--d{font-family:var(--f-tit);font-weight:700;color:var(--blu);font-size:clamp(.95rem,1.4vw,1.1rem);padding:.3em .8em;border-color:var(--blu);border-width:2px}
+.fumetto--d::after{border-top-color:var(--blu);border-top-width:11px;bottom:-11px}
+.fumetto--d::before{bottom:-7px}
+.fumetto--r{margin:0}
+h2.fumetto--r{font-size:clamp(1.45rem,3vw,2.3rem)}
+h1.fumetto--r{font-size:clamp(2.4rem,6vw,4.8rem);line-height:1.05;padding:.3em .55em}
+
+/* ── intro: il macellaio che chiede ── */
+.no-js .intro{display:none}
+.intro{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;padding:1rem;background:var(--crema);text-align:center;transition:opacity .6s,visibility .6s}
+.intro.hide{opacity:0;visibility:hidden}
+.intro .banco{align-items:end;gap:1rem 1.2rem;text-align:left}
+.intro .banco__m{width:140px;height:140px}
+.intro .fumetto--r{font-family:var(--f-tit);font-weight:700;font-size:clamp(2rem,7vw,4.4rem);color:var(--blu)}
+.intro__f{margin:1.2rem 0 0;font-size:.85rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--marrone);opacity:0;transition:opacity .4s}
+.intro__f.is-on{opacity:1}
+.intro__skip{margin-top:1.4rem;background:none;border:0;color:var(--grigio);font:inherit;font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+
+/* ── testata (fondo pieno, NIENTE backdrop-filter) ── */
+.testata{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:1rem;height:var(--testata);padding:0 clamp(1rem,4vw,3rem);background:var(--carta);color:var(--inchiostro);border-bottom:3px solid var(--blu);max-width:100%;overflow:hidden}
+.marchio{display:flex;flex-direction:column;justify-content:center;text-decoration:none;line-height:1.1;white-space:nowrap;min-width:0}
+.marchio__n{font-family:var(--f-tit);font-weight:700;font-size:1.15rem;color:var(--blu)}
+.marchio__s{font-size:.74rem;color:var(--grigio);letter-spacing:.02em}
+.nav{display:flex;gap:clamp(.6rem,1.4vw,1.1rem)}
+.nav a{text-decoration:none;font-size:.9rem;font-weight:700;padding:.3rem 0;border-bottom:2px solid transparent;white-space:nowrap}
+.nav a:hover{border-color:var(--rosso)}
+.testata__coda{display:flex;align-items:center;gap:.6rem}
+.lingue{display:flex;border:1px solid var(--inchiostro);border-radius:4px;overflow:hidden}
+.lingue button{background:none;border:0;padding:.35rem .5rem;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--inchiostro)}
+.lingue button.is-on{background:var(--inchiostro);color:var(--carta)}
+.burger{display:none;width:42px;height:42px;background:none;border:0;cursor:pointer;flex-direction:column;justify-content:center;gap:5px;padding:8px}
+.burger span{display:block;height:2px;background:var(--inchiostro)}
+.drawer{position:fixed;top:var(--testata);left:0;right:0;z-index:85;background:var(--carta);border-bottom:3px solid var(--blu);padding:.6rem var(--lato) 1rem;display:grid;gap:.1rem;box-shadow:0 14px 30px rgba(0,0,0,.14)}
+.drawer a{padding:.65rem 0;text-decoration:none;font-weight:700;border-bottom:1px solid var(--linea)}
+.drawer__cta{color:var(--rosso);border-bottom:0 !important}
+
+/* ── bottoni ── */
+.bottone{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.72rem 1.15rem;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;line-height:1.1;border:2px solid transparent;transition:transform .15s,background .15s}
+.bottone--rosso{background:var(--rosso);color:#fff;border-color:var(--rosso)}
+.bottone--rosso:hover{background:#8F1B2A}
+.bottone--blu{background:var(--blu);color:#fff;border-color:var(--blu)}
+.bottone--bordo{background:transparent;color:var(--inchiostro);border-color:var(--inchiostro)}
+.bottone:hover{transform:translateY(-1px)}
+.testata .bottone{padding:.5rem .9rem;font-size:.88rem}
+
+/* ── sezioni ── */
+.sezione{padding:clamp(2.2rem,5vw,4.4rem) var(--lato)}
+.sezione--tinta{background:var(--beige-2)}
+.dentro{max-width:1180px;margin:0 auto}
+.sezione__k{font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--marrone);margin:0 0 .9rem}
+.sezione__p{max-width:42rem;margin-top:1.2rem}
+.didascalia{font-size:.78rem;color:var(--grigio);padding:.5rem 0 0;margin:0}
+.foto{margin:0}
+.foto img{width:100%;border-radius:10px}
+.shot{display:block;position:relative;width:100%;padding:0;border:0;background:none;cursor:zoom-in;text-align:left;font:inherit;color:inherit}
+.due{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.4rem,3vw,3rem);align-items:start}
+
+/* ── apertura ── */
+.apertura{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.4rem,3vw,3rem);align-items:center}
+.apertura__k{font-size:.76rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--marrone);margin:0 0 1.2rem}
+.apertura .banco{margin-bottom:1.2rem}
+.apertura .banco__m{width:112px;height:112px}
+.apertura__risposta{font-family:var(--f-txt);font-weight:700;font-size:clamp(1.05rem,1.5vw,1.25rem);max-width:30rem;line-height:1.4}
+.apertura__p{font-size:clamp(1.02rem,1.3vw,1.15rem);max-width:34rem}
+.apertura__stato{font-size:.9rem;font-weight:700;color:var(--rosso);margin:.2rem 0 1rem}
+.apertura__azioni{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem}
+.apertura__badge{font-size:.86rem;color:var(--grigio);max-width:32rem;margin:0}
+.apertura__foto img{border-radius:10px;box-shadow:0 18px 40px rgba(26,23,20,.14)}
+
+/* ── conteggi e citazione ── */
+.conteggio{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.9rem;margin:1.4rem 0 1rem;padding:0;list-style:none}
+.conteggio li{border-top:3px solid var(--rosso);padding-top:.5rem}
+.conteggio b{display:block;font-family:var(--f-tit);font-weight:700;font-size:2.3rem;line-height:1}
+.conteggio span{font-size:.84rem;color:var(--grigio);display:block;line-height:1.35;margin-top:.2rem}
+.conteggio__nota{font-size:.76rem;color:var(--grigio);margin:0 0 1rem}
+.citazione{font-family:var(--f-tit);font-weight:700;font-size:clamp(1.4rem,2.8vw,2.1rem);line-height:1.15;margin:1.3rem 0 1rem;color:var(--blu)}
+.citazione small{display:block;font-family:var(--f-txt);font-weight:600;font-size:.8rem;color:var(--grigio);margin-top:.4rem}
+.cartello{display:inline-block;background:var(--carta);border:2px solid var(--inchiostro);border-radius:6px;padding:.5rem .9rem;font-family:var(--f-tit);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.9rem;margin:.2rem .4rem .4rem 0}
+.tre{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.4rem 0 0;padding:0;list-style:none}
+.voce{background:var(--carta);border:1px solid var(--linea);border-top:6px solid var(--rosso);border-radius:8px;padding:1.1rem 1.1rem 1rem}
+.voce--blu{border-top-color:var(--blu)} .voce--marrone{border-top-color:var(--marrone)}
+.voce h3{margin:0 0 .4rem}
+.voce p{margin:0;font-size:.97rem}
+
+/* ── recensioni ── */
+.recensioni{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;list-style:none;margin:1.4rem 0 0;padding:0}
+.rec{background:var(--carta);border:1px solid var(--linea);border-radius:10px;padding:1.1rem 1.1rem 1rem;display:flex;flex-direction:column}
+.rec p{margin:0 0 .7rem;font-size:.97rem;flex:1}
+.rec__chi{font-size:.74rem;font-weight:700;color:var(--grigio)}
+.stelle{color:var(--marrone);letter-spacing:.05em;font-size:.9rem;margin-bottom:.4rem}
+.voto{display:inline-flex;align-items:baseline;gap:.5rem;font-size:.86rem;color:var(--grigio);margin:.4rem 0 0}
+.voto b{font-family:var(--f-tit);font-weight:700;font-size:1.7rem;color:var(--inchiostro)}
+
+/* ── orari e dove ── */
+.dove{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;margin-top:1.2rem}
+.orari table{width:100%;border-collapse:collapse;font-size:.98rem}
+.orari td{padding:.5rem .3rem;border-bottom:1px solid var(--linea);vertical-align:top}
+.orari td:first-child{font-weight:700;width:32%}
+.orari tr.is-today td{background:var(--beige)}
+.orari .solo{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--rosso);padding:.15rem .45rem;border-radius:4px;margin-left:.4rem;vertical-align:.1em}
+.orari__nota{font-size:.9rem;color:var(--grigio);margin:.8rem 0 0}
+.contatti{list-style:none;padding:0;margin:0 0 1rem;display:grid;gap:.5rem;font-size:1rem}
+.contatti a{color:var(--rosso);font-weight:700}
+.contatti__k{display:block;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--grigio)}
+.fotodue{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+.mappa{margin:1.4rem 0 0;grid-column:1/-1}
+.mappa iframe{width:100%;height:340px;border:0;display:block;border-radius:10px}
+
+/* ── domande ── */
+.domande{display:grid;gap:.6rem;margin-top:1.2rem}
+.domande details{background:var(--carta);border:1px solid var(--linea);border-radius:10px;padding:.75rem 1rem}
+.domande summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+.domande summary::-webkit-details-marker{display:none}
+.domande summary::after{content:'+';font-family:var(--f-tit);font-weight:700;color:var(--rosso);flex:none}
+.domande details[open] summary::after{content:'–'}
+.domande p{margin:.55rem 0 0;font-size:.98rem}
+
+/* ── piede ── */
+.piede{border-top:8px solid var(--marrone);margin-top:2rem}
+.piede__dentro{max-width:1180px;margin:0 auto;padding:1.6rem var(--lato) 5rem;color:var(--grigio);font-size:.85rem;display:grid;gap:.5rem}
+.piede__m{font-family:var(--f-tit);font-weight:700;color:var(--blu);font-size:1.2rem;margin:0}
+.piede__d,.piede__s,.piede__b{margin:0}
+.piede__b{margin-top:.4rem;max-width:60rem}
+.piede a{color:inherit}
+
+/* ── barra azioni (mobile) ── */
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:80;display:none;grid-template-columns:repeat(4,1fr);background:var(--inchiostro);color:var(--carta)}
+.barra a{padding:.85rem .3rem;text-align:center;font-size:.8rem;font-weight:700;text-decoration:none;border-right:1px solid rgba(255,255,255,.14)}
+.barra a:last-child{border-right:0}
+
+/* ── lightbox ── */
+.lightbox{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:2rem}
+.lightbox img{max-width:100%;max-height:90vh;width:auto;height:auto;object-fit:contain}
+.lightbox__chiudi{position:absolute;top:1rem;right:1rem;background:none;border:0;color:#fff;font-size:2.4rem;cursor:pointer;line-height:1}
+
+/* ── responsive ── */
+@media (max-width:960px){
+  .nav{display:none}
+  .burger{display:flex}
+  .apertura,.due{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .testata{gap:.5rem;padding:0 1rem}
+  .testata .bottone{display:none}
+  .marchio__s{display:none}
+  .marchio__n{font-size:1rem}
+  .lingue button{padding:.3rem .4rem}
+  .banco{grid-template-columns:1fr;align-items:start}
+  .banco__m{width:72px;height:72px}
+  .apertura .banco__m{width:96px;height:96px}
+  h1.fumetto--r{font-size:clamp(2.1rem,11vw,3.4rem)}
+  .fumetto{border-radius:14px}
+  .dove,.fotodue{grid-template-columns:1fr}
+  .barra{display:grid}
+  .piede__dentro{padding-bottom:6.5rem}
+  .mappa iframe{height:280px}
+  .orari .solo{display:block;width:max-content;margin:.25rem 0 0;font-size:.6rem;letter-spacing:.04em;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bottone{transition:none}
+}
