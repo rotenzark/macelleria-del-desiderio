@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
 <title>La Macelleria del Desiderio — Desidera? Macelleria e gastronomia in via Luigi Ornato 45, Milano</title>
 <meta name="description" content="La Macelleria del Desiderio di Antonio Desiderio, via Luigi Ornato 45 a Milano (Niguarda): carni di origine garantita e salumi, gastronomia di propria produzione ogni giorno, formaggi e latticini, servizio a domicilio, tutti i tipi di ticket. Lunedì 8–13, martedì–sabato 8–13 e 16–19:30. Tel 02 642 4792.">
 <link rel="canonical" href="https://rotenzark.github.io/macelleria-del-desiderio/">
@@ -16,12 +17,64 @@
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;900&family=Cabin:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css?v=1">
 <link rel="stylesheet" href="css/styles.css?v=1">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Store","name":"La Macelleria del Desiderio di Antonio Desiderio","alternateName":"Macelleria Desiderio","image":"https://rotenzark.github.io/macelleria-del-desiderio/img/og.jpg","url":"https://rotenzark.github.io/macelleria-del-desiderio/","telephone":"+39026424792","email":"macelleriadesiderio@gmail.com","address":{"@type":"PostalAddress","streetAddress":"Via Luigi Ornato 45","addressLocality":"Milano","postalCode":"20162","addressRegion":"MI","addressCountry":"IT"},"geo":{"@type":"GeoCoordinates","latitude":45.5183384,"longitude":9.1918654},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"Monday","opens":"08:00","closes":"13:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"08:00","closes":"13:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"16:00","closes":"19:30"}],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"38"}}
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "La Macelleria del Desiderio di Antonio Desiderio",
+  "alternateName": "Macelleria Desiderio",
+  "image": "https://rotenzark.github.io/macelleria-del-desiderio/img/og.jpg",
+  "url": "https://rotenzark.github.io/macelleria-del-desiderio/",
+  "telephone": "+39026424792",
+  "email": "macelleriadesiderio@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Luigi Ornato 45",
+    "addressLocality": "Milano",
+    "postalCode": "20162",
+    "addressRegion": "MI",
+    "addressCountry": "IT"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 45.5183384,
+    "longitude": 9.1918654
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Monday",
+      "opens": "08:00",
+      "closes": "13:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "08:00",
+      "closes": "13:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "16:00",
+      "closes": "19:30"
+    }
+  ]
+}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -42,13 +95,13 @@
     <img class="banco__m" src="img/macellaio.jpg" alt="" width="480" height="725">
     <div class="banco__f"><p class="fumetto fumetto--r">Desidera?</p></div>
   </div>
-  <p class="intro__f" id="introFine" data-i18n="intro.f">La Macelleria del Desiderio · via Luigi Ornato 45</p>
+  <p lang="it" class="intro__f" id="introFine" data-i18n="intro.f">La Macelleria del Desiderio · via Luigi Ornato 45</p>
   <button type="button" class="intro__skip" id="introSkip" data-i18n="intro.skip">salta</button>
 </div>
 
 <header class="testata" id="top">
   <a class="marchio" href="#top" aria-label="La Macelleria del Desiderio, torna in cima" data-i18n-aria="nav.home">
-    <span class="marchio__n">La Macelleria del Desiderio</span>
+    <span lang="it" class="marchio__n">La Macelleria del Desiderio</span>
     <span class="marchio__s" data-i18n="marchio.s">di Antonio Desiderio · via Luigi Ornato 45, Milano</span>
   </a>
   <nav class="nav" id="mainNav" aria-label="Menu principale">
@@ -226,10 +279,10 @@
     <p class="sezione__p reveal reveal-d2" data-i18n="r.p">Cinque recensioni Google, come sono state scritte.</p>
     <p class="voto reveal reveal-d2"><b>4,8</b><span data-i18n="r.voto">su 5 · 38 recensioni Google</span></p>
     <ul class="recensioni">
-      <li class="rec reveal"><span class="stelle" aria-hidden="true">★★★★★</span><p>Ottima qualità! È la mia macelleria di fiducia da anni!!La consiglio a tutti! Non solo carne ma formaggi freschi e di qualità, prodotti italiani e un'ampia proposta di gastronomía fatta in loco!</p><span class="rec__chi" data-i18n="r1.c">Viviana · 5 anni fa · 5 stelle</span></li>
+      <li class="rec reveal"><span class="stelle" aria-hidden="true">★★★★★</span><p lang="it">Ottima qualità! È la mia macelleria di fiducia da anni!!La consiglio a tutti! Non solo carne ma formaggi freschi e di qualità, prodotti italiani e un'ampia proposta di gastronomía fatta in loco!</p><span class="rec__chi" data-i18n="r1.c">Viviana · 5 anni fa · 5 stelle</span></li>
       <li class="rec reveal reveal-d1"><span class="stelle" aria-hidden="true">★★★★★</span><p>Super gentili e ben forniti. Accettano i buoni pasto. Affettuosi coi bimbi.</p><span class="rec__chi" data-i18n="r2.c">Laura P. · 2 anni fa · 5 stelle</span></li>
-      <li class="rec reveal reveal-d2"><span class="stelle" aria-hidden="true">★★★★★</span><p>Ottima carne e cibi preparati freschi gentilissimi e molto disponibili per ogni necessità.</p><span class="rec__chi" data-i18n="r3.c">Patrizia V. · 3 anni fa · 5 stelle</span></li>
-      <li class="rec reveal reveal-d3"><span class="stelle" aria-hidden="true">★★★★★</span><p>Qualità e cortesia impareggiabili....Da anni mi servo solo da loro i prodotti sono ottimi e il sorriso non manca mai....Consiglio questa macelleria a tutti!</p><span class="rec__chi" data-i18n="r4.c">Barbara P. · 5 anni fa · 5 stelle</span></li>
+      <li class="rec reveal reveal-d2"><span class="stelle" aria-hidden="true">★★★★★</span><p lang="it">Ottima carne e cibi preparati freschi gentilissimi e molto disponibili per ogni necessità.</p><span class="rec__chi" data-i18n="r3.c">Patrizia V. · 3 anni fa · 5 stelle</span></li>
+      <li class="rec reveal reveal-d3"><span class="stelle" aria-hidden="true">★★★★★</span><p lang="it">Qualità e cortesia impareggiabili....Da anni mi servo solo da loro i prodotti sono ottimi e il sorriso non manca mai....Consiglio questa macelleria a tutti!</p><span class="rec__chi" data-i18n="r4.c">Barbara P. · 5 anni fa · 5 stelle</span></li>
       <li class="rec reveal reveal-d3"><span class="stelle" aria-hidden="true">★★★★</span><p>Carni ottime</p><span class="rec__chi" data-i18n="r5.c">Danilo C. · un anno fa · 4 stelle</span></li>
     </ul>
   </div>
@@ -276,7 +329,7 @@
         <figcaption class="didascalia" data-i18n="o.cap2">l'insegna su via Luigi Ornato (Google Street View)</figcaption>
       </figure>
       <div class="mappa reveal" id="mappa">
-        <iframe src="https://www.google.com/maps?q=Macelleria+Desiderio+Antonio,+Via+Luigi+Ornato+45,+20162+Milano&amp;z=16&amp;output=embed" title="Mappa: La Macelleria del Desiderio, Via Luigi Ornato 45, Milano" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen data-i18n-title="o.mappa"></iframe>
+        <div class="mappa-clic" data-mappa-clic style="--mappa-h: 320px"><template><iframe src="https://www.google.com/maps?q=Macelleria+Desiderio+Antonio,+Via+Luigi+Ornato+45,+20162+Milano&amp;z=16&amp;output=embed" title="Mappa: La Macelleria del Desiderio, Via Luigi Ornato 45, Milano" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen data-i18n-title="o.mappa"></iframe></template><div class="mappa-clic__velo"><a class="mappa-clic__btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Luigi+Ornato+45,+20162+Milano" target="_blank" rel="noopener">Mostra la mappa</a><p class="mappa-clic__nota">La mappa è di Google: aprendola, Google riceve il tuo indirizzo IP e può usare i suoi cookie.</p></div></div>
       </div>
     </div>
   </div>
@@ -289,7 +342,7 @@
     <div class="banco reveal reveal-d1" data-fumetto data-stato="risponde">
       <img class="banco__m" src="img/macellaio.jpg" alt="" width="480" height="725">
       <div class="banco__f">
-        <span class="fumetto fumetto--d" data-i18n="q.d">Desidera chiedere?</span>
+        <span lang="it" class="fumetto fumetto--d" data-i18n="q.d">Desidera chiedere?</span>
         <h2 class="fumetto fumetto--r" id="t-domande" data-i18n="q.h">Le domande che ci fanno.</h2>
       </div>
     </div>
@@ -309,10 +362,10 @@
 
 <footer class="piede">
   <div class="piede__dentro">
-    <p class="piede__m">La Macelleria del Desiderio</p>
+    <p lang="it" class="piede__m">La Macelleria del Desiderio</p>
     <p class="piede__s" data-i18n="piede.s">di Antonio Desiderio · macelleria, gastronomia, formaggi · servizio a domicilio · tutti i ticket · lun 8–13, mar–sab 8–13 e 16–19:30</p>
     <p class="piede__d">Via Luigi Ornato 45, 20162 Milano · <a href="tel:+39026424792">02 642 4792</a> · <a href="mailto:macelleriadesiderio@gmail.com">macelleriadesiderio@gmail.com</a></p>
-    <p class="piede__b" data-i18n="piede.b">Sito dimostrativo realizzato da <a href="https://bespokestud.io" target="_blank" rel="noopener">Bespoke Studio</a> · testi, orari e servizi dal sito dell'attività, dalla scheda Google e dalle recensioni pubbliche su Google (settembre 2026); fotografie dalla scheda Google e dal sito dell'attività e da Google Street View.</p>
+    <p class="piede__b" data-i18n="piede.b">Sito dimostrativo realizzato da <a href="https://bespokestud.io" target="_blank" rel="noopener">Bespoke Studio</a> · <a href="privacy.html">Privacy</a> · testi, orari e servizi dal sito dell'attività, dalla scheda Google e dalle recensioni pubbliche su Google (settembre 2026); fotografie dalla scheda Google e dal sito dell'attività e da Google Street View.</p>
   </div>
 </footer>
 
@@ -331,5 +384,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="js/main.js?v=1"></script>
+<script src="js/mappa-clic.js?v=1" defer></script>
 </body>
 </html>
